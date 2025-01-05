@@ -19,4 +19,14 @@ steps:
     testResultsFiles: '**/TEST-*.xml'  # Updated pattern for test result files
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.11'  # Replace with your JDK version
-    jdkArchitectureOption: 'x64'
+    jdkArchitectureOption: 'x64' 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(agent.builddirectory)'
+    Contents: '**/*SNAPSHOT.jar'
+    TargetFolder: '$(build.artifactstagingdirectory)' 
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
